@@ -17,8 +17,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('tipo-estudios', [TipoEstudioController::class, 'index']);
     Route::get('tipo-estudios/{tipoEstudio}', [TipoEstudioController::class, 'show']);
     Route::apiResource('solicitudes', SolicitudController::class);
-    Route::patch('solicitudes/{solicitud}/estado', [SolicitudController::class, 'updateEstado']);
+    Route::put('solicitudes/{solicitud}/estado', [SolicitudController::class, 'updateEstado']);
 });
+
 
 
 Route::get('/dashboard', function () {
