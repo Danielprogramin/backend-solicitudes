@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CandidatoController;
 use App\Http\Controllers\TipoEstudioController;
 use App\Http\Controllers\SolicitudController;
+use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -20,7 +21,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('solicitudes/{solicitud}/estado', [SolicitudController::class, 'updateEstado']);
 });
 
-
+Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'show']);
 
 Route::get('/dashboard', function () {
     return response()->json([
