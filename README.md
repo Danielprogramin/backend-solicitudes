@@ -22,7 +22,7 @@ Este proyecto implementa una API RESTful para un sistema de gestión de solicitu
 1. **Clonar el repositorio**
    ```bash
    git clone https://github.com/Danielprogramin/backend-solicitudes.git
-   cd gestion-estudios-seguridad-backend
+   cd backend-solicitudes
    ```
 
 2. **Instalar dependencias**
