@@ -1,66 +1,161 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistema de Gestión de Estudios de Seguridad - Backend (Laravel 11)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este proyecto implementa una API RESTful para un sistema de gestión de solicitudes de estudios de seguridad, desarrollada con Laravel 11.
 
-## About Laravel
+## Tecnologías Utilizadas
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Laravel 11**: Framework PHP para el desarrollo del backend
+- **PHP 8.2**: Lenguaje de programación
+- **Postgres 8.0**: Sistema de gestión de base de datos
+- **Laravel Sanctum**: Para la autenticación basada en tokens
+- **Composer**: Gestor de dependencias de PHP
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requisitos Previos
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- PHP 8.2 o superior
+- Composer
+- Postgres 8.0 o superior
+- Servidor web PHP artisan serve
 
-## Learning Laravel
+## Instalación
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. **Clonar el repositorio**
+   ```bash
+   git clone https://github.com/Danielprogramin/backend-solicitudes.git
+   cd gestion-estudios-seguridad-backend
+   ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. **Instalar dependencias**
+   ```bash
+   composer install
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. **Configurar el entorno**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-## Laravel Sponsors
+4. **Configurar la base de datos**
+   - Editar el archivo `.env` con los datos de conexión a la base de datos:
+     ```
+     APP_NAME=Laravel
+     APP_ENV=local
+     APP_KEY=
+     APP_DEBUG=true
+     APP_TIMEZONE=UTC
+     APP_URL=http://localhost:8000
+     FRONTEND_URL=http://localhost:4200
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+     ```
 
-### Premium Partners
+     ```
+     DB_CONNECTION=pgsql
+     DB_HOST=127.0.0.1
+     DB_PORT=5432
+     DB_DATABASE=solicitudes
+     DB_USERNAME=postgres
+     DB_PASSWORD=
+     ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+     ```
+     SANCTUM_STATEFUL_DOMAINS=http://localhost:4200
+     ```
 
-## Contributing
+5. **Ejecutar migraciones y seeders**
+   ```bash
+   php artisan migrate
+   php artisan db:seed
+   ```
+   Este comando creará las tablas necesarias y cargará datos iniciales, incluyendo:
+   - Usuario administrador (admin@example.com/admin)
+   - Tipos de estudio predefinidos
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+6. **Iniciar el servidor**
+   ```bash
+   php artisan serve
+   ```
+   La API estará disponible en `http://localhost:8000`
 
-## Code of Conduct
+## Estructura del Proyecto
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```
+app/
+├── Http/
+│   ├── Controllers/
+│   │   ├── AuthController.php         # Gestión de autenticación
+│   │   ├── CandidatoController.php    # CRUD de candidatos
+│   │   ├── TipoEstudioController.php  # Listado y detalle de tipos de estudio
+│   │   └── SolicitudController.php    # CRUD de solicitudes
+│   ├── Requests/                      # Validación de formularios
+│   ├── Resources/                     # Transformación de datos para la API
+│   └── Middleware/                    # Middleware de autenticación y otros
+├── Models/
+│   ├── User.php
+│   ├── Candidato.php
+│   ├── TipoEstudio.php
+│   └── Solicitud.php
+├── Database/
+│   ├── Migrations/                    # Estructura de tablas
+│   └── Seeders/                       # Datos iniciales
+└── Routes/
+    └── api.php                        # Definición de rutas de la API
+```
 
-## Security Vulnerabilities
+## Rutas de la API
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Autenticación
+- `POST /api/login`: Iniciar sesión
+- `POST /api/logout`: Cerrar sesión
+- `GET /api/user`: Obtener usuario autenticado
 
-## License
+### Candidatos
+- `GET /api/candidatos`: Listar todos los candidatos
+- `GET /api/candidatos/{id}`: Obtener detalle de un candidato
+- `POST /api/candidatos`: Crear un nuevo candidato
+- `PUT /api/candidatos/{id}`: Actualizar un candidato
+- `DELETE /api/candidatos/{id}`: Eliminar un candidato
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Tipos de Estudio
+- `GET /api/tipos-estudio`: Listar todos los tipos de estudio
+- `GET /api/tipos-estudio/{id}`: Obtener detalle de un tipo de estudio
+
+### Solicitudes
+- `GET /api/solicitudes`: Listar todas las solicitudes (con filtros opcionales)
+- `GET /api/solicitudes/{id}`: Obtener detalle de una solicitud
+- `POST /api/solicitudes`: Crear una nueva solicitud
+- `PUT /api/solicitudes/{id}`: Actualizar una solicitud
+- `PATCH /api/solicitudes/{id}/estado`: Actualizar el estado de una solicitud
+- `DELETE /api/solicitudes/{id}`: Eliminar una solicitud
+
+## Decisiones Técnicas
+
+### Arquitectura API RESTful
+Se ha implementado una API RESTful siguiendo las mejores prácticas:
+- Uso de verbos HTTP (GET, POST, PUT, DELETE) según corresponda
+- Respuestas con códigos HTTP apropiados
+- Uso de API Resources para transformar modelos en respuestas JSON consistentes
+
+### Autenticación con Sanctum
+Se eligió Laravel Sanctum para la autenticación por:
+- Soporte nativo para SPA (Single Page Applications)
+- Implementación sencilla
+- Seguridad mediante tokens
+
+### Validación de Datos
+- Uso de Form Requests para centralizar la validación
+- Reglas específicas para cada campo (formatos de correo, teléfono, etc.)
+- Mensajes de error personalizados
+
+### Base de Datos
+- Relaciones definidas en los modelos Eloquent
+- Índices en campos críticos para optimizar consultas
+- Restricciones a nivel de base de datos para garantizar integridad referencial
+
+
+## Credenciales de Prueba
+- **Usuario**: admin@example.com
+- **Contraseña**: admin
+
+## Licencia
+Este proyecto es de uso exclusivo para evaluación técnica.
